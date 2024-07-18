@@ -16,10 +16,12 @@ header {
   text-align: center;
   padding: 1em 0;
 }
-header a{
+
+header a {
   font-size: large;
   color: #45a049;
   text-decoration: none;
+  margin: 0 15px;
 }
 
 h1 {
