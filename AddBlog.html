@@ -13,7 +13,7 @@
     <header>
         <h1>Add Blog</h1>
         <a href="/">/Home</a>
-        <a href="/DisplayBlog.html">/Display Blog</a>
+        <a href="DisplayBlog.html">/Display Blog</a>
     </header>
     <main class="add-blog">
         <!-- Main content section containing the form -->
@@ -33,11 +33,7 @@
 
                     <!-- Blog description input section -->
                     <div class="blogdescription" id="editor">
-                        <!-- <fieldset>
-                            <legend>Description</legend>
-                            <textarea name="description" id="description" placeholder="Enter Description"
-                                required></textarea>
-                        </fieldset> -->
+                       
                     </div>
 
                     <!-- Blog image URL input section -->
@@ -62,60 +58,8 @@
         copyright @ <a href="https://www.linkedin.com/in/chtahir797">Mr Tahir</a>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-    <script>
-        const options = {
 
-            modules: {
-                toolbar: true,
-            },
-            placeholder: 'Compose an epic...',
-            theme: 'snow'
-        };
-        const quill = new Quill('#editor', options);
-    </script>
-    <script>
-        // Get the form element by its ID
-        let blogForm = document.querySelector("#blogForm");
-        let allBlogs = JSON.parse(localStorage.getItem('allBlogsData')) || [];
-        console.log(allBlogs);
-        // Function to save form data as an object
-        const saveFormData = (e) => {
-            // Prevent default form submission behavior
-            e.preventDefault();
-
-            // Get the values of the input fields
-            let title = document.querySelector("#title").value;
-            let description = quill.root.innerHTML.trim(); // Fetch edited content from Quill
-            let image = document.querySelector("#imageurl").value;
-
-            // Validate URL pattern
-            const urlPattern = new RegExp('https?://.+');
-
-            // Check if all fields are filled and the URL is valid
-            if (title && description && urlPattern.test(image)) {
-                // Create a BlogData object to hold the form data
-                const BlogData = {
-                    title: title,
-                    description: description,
-                    image: image,
-                };
-                // Log the BlogData object to the console
-
-                allBlogs.push(BlogData)
-                localStorage.setItem('allBlogsData', JSON.stringify(allBlogs))
-                // Reset the values of the input fields
-                blogForm.reset();
-                // description.innerHTML = "";
-                quill.setContents([]);
-            } else {
-                // Alert the user if any fields are missing or invalid
-                alert("Please fill all the fields correctly");
-            }
-        };
-
-        // Add event listener to the form submission
-        blogForm.addEventListener("submit", saveFormData);
-    </script>
+    <script src="assets/JS/addBlog.js"></script>
 </body>
 
 </html>

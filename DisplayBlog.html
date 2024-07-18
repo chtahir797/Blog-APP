@@ -13,7 +13,7 @@
     <header>
         <h1>All Blogs</h1>
         <a href="/">/Home</a>
-        <a href="/AddBlog.html">/AddBlog</a>
+        <a href="AddBlog.html">/AddBlog</a>
     </header>
     <main class="display_blog"></main>
     <div class="updateBlog">
@@ -33,11 +33,7 @@
 
                     <!-- Blog description input section -->
                     <div class="blogdescription" id="editor">
-                        <!-- <fieldset>
-                            <legend>Description</legend>
-                            <textarea name="description" id="description" placeholder="Enter Description"
-                                required></textarea>
-                        </fieldset> -->
+                        
                     </div>
 
                     <!-- Blog image URL input section -->
@@ -78,122 +74,8 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-    <script>
-        const options = {
-
-            modules: {
-                toolbar: true,
-            },
-            placeholder: 'Compose an epic...',
-            theme: 'snow'
-        };
-        const quill = new Quill('#editor', options);
-    </script>
-    <script>
-        let allBlogs = JSON.parse(localStorage.getItem('allBlogsData')) || [];
-        const displayBlog = document.querySelector('.display_blog');
-        let cross = document.querySelector('.cross')
-        let getBox = document.querySelector('.updateBlog')
-        const CloseBox = () => {
-            getBox.style.display = "none"
-        }
-        cross.addEventListener('click', CloseBox)
-
-        const editBlog = (blogDiv, button) => {
-            const editIt = () => {
-                const getTitle = blogDiv.querySelector('.blogTitle h2').textContent.trim();
-                const getDescription = blogDiv.querySelector('.blogDescription').innerHTML.trim();
-                const getImage = blogDiv.querySelector('.blogImage img').getAttribute('src').trim();
-                const getupdateButton = document.querySelector('#updateBlog')
-                getBox.style.display = "block"
-                const getValues = () => {
-                    let newTitle = document.querySelector("#title").value;
-                    let newDescription = quill.root.innerHTML.trim(); // Fetch edited content from Quill
-                    let imageUrl = document.querySelector("#imageurl").value;
-                    // Check if all fields are filled and the URL is valid
-                    if (newTitle && newDescription && imageUrl) {
-                        // Update in DOM
-                        blogDiv.querySelector('.blogTitle h2').textContent = newTitle;
-                        blogDiv.querySelector('.blogDescription').innerHTML = newDescription;
-                        blogDiv.querySelector('.blogImage img').setAttribute('src', imageUrl);
-
-                        // Update in localStorage
-                        allBlogs = allBlogs.map(blog => {
-                            if (blog.title === getTitle && blog.description === getDescription && blog.image === getImage) {
-                                blog.title = newTitle;
-                                blog.description = newDescription;
-                                blog.image = imageUrl;
-                            }
-                            return blog;
-                        });
-                        localStorage.setItem('allBlogsData', JSON.stringify(allBlogs));
-                        getBox.style.display = "none"
-                    }else{
-                        alert("Please fill all the fields correctly");
-                    }
-                }
-
-                getupdateButton.addEventListener('click', getValues)
-
-            };
-
-            button.addEventListener('click', editIt);
-        };
-
-        const removeBlog = (blogDiv, button) => {
-            const removeIt = () => {
-                const getTitle = blogDiv.querySelector('.blogTitle h2').textContent.trim();
-                const getDescription = blogDiv.querySelector('.blogDescription').innerHTML.trim();
-                const getImage = blogDiv.querySelector('.blogImage img').getAttribute('src').trim();
-                console.log(getTitle, getDescription, getImage)
-                console.log("Before Deleting array Data: ", allBlogs)
-                // Remove from local storage
-                allBlogs = allBlogs.filter(blog => !(blog.title === getTitle && blog.description === getDescription && blog.image === getImage));
-                localStorage.setItem('allBlogsData', JSON.stringify(allBlogs));
-                console.log("After deleting Array Data: ", allBlogs)
-
-                // Remove from DOM
-                blogDiv.remove();
-            }
-            button.addEventListener('click', removeIt)
-
-        };
-
-        if (allBlogs.length > 0) {
-            allBlogs.forEach((element, index) => {
-                let createDiv = document.createElement('div');
-                createDiv.className = "singleBlog";
-                createDiv.innerHTML = `
-                    <div class="blogTitle">
-                        <h2>${element.title}</h2>
-                    </div>
-                    <div class="blogDescription">
-                        ${element.description}
-                    </div>
-                    <div class="blogImage">
-                        <img src="${element.image}" alt="Blog Image">
-                    </div>
-                    <div class="buttons">
-                        <button type="button" class="editBlog" >Edit</button>
-                        <button type="button" class="removeBlog" >Remove</button>
-                    </div>
-                `;
-                displayBlog.append(createDiv);
-                const editButton = createDiv.querySelector('.editBlog')
-                const removeButton = createDiv.querySelector('.removeBlog')
-                editBlog(createDiv, editButton)
-                removeBlog(createDiv, removeButton)
-            });
-        } else {
-            let createDiv = document.createElement('div');
-            createDiv.className = "singleBlog";
-            createDiv.innerHTML = `
-                <div class="noBlog">
-                    <h2>No Blog found</h2>
-                </div>
-            `;
-            displayBlog.append(createDiv);
-        }
+    <script src="assets/JS/displayBlog.js">
+       
     </script>
 
 </body>
